@@ -1,0 +1,19 @@
+{
+  "name": "yore",
+  "version": "1.0.0",
+  "description": "Yore is a Food columnist",
+  "main": "index.js",
+  "scripts": {
+    "test": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yhkim16/Yore.git"
+  },
+  "author": "yhKim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yhkim16/Yore/issues"
+  },
+  "homepage": "https://github.com/yhkim16/Yore#readme"
+}
