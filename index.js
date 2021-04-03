@@ -24,6 +24,14 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.get('/', function (req, res) {
     res.render('main.html');
 });
+app.get('/menu', function (req, res) {
+    var menu = true;
+    res.render('main.html',{menu});
+});
+app.get('/info', function (req, res) {
+    var info = true;
+    res.render('main.html',{info});
+});
 
 app.listen(port);
 

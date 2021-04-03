@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include "views/header.html" %}
+        {% include "views/partial/header.html" %}
         <title>재료기반 메뉴추천 프로그램</title>
     </head>
     <body>
-        {% include "views/nav.html" %}
-        Hello World! 
+        {% include "views/partial/nav.html" %}
+
+        {% if menu %}
+        {% include "views/contents/menu.html" %}
+        {% elif info %}
+        {% include "views/contents/info.html" %}
+        {% else %}
+        {% include "views/contents/menu.html" %}
+        {% endif %}
+
     </body>
 </html>
