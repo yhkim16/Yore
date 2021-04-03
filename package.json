@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/yhkim16/Yore#readme",
   "dependencies": {
+    "bootstrap": "^4.6.0",
     "express": "^4.17.1",
-    "nunjucks": "^3.2.3"
+    "jquery": "^3.6.0",
+    "nunjucks": "^3.2.3",
+    "popper.js": "^1.16.1"
   }
 }
