@@ -21,14 +21,15 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redi
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
 
+
 app.get('/', function (req, res) {
-    res.render('main.html');
+    res.redirect('/menu')
 });
-app.get('/menu', function (req, res) {
+app.get('/menu', function (req, res) {// 메뉴 추천 
     var menu = true;
     res.render('main.html',{menu});
 });
-app.get('/info', function (req, res) {
+app.get('/info', function (req, res) { // 팀원 목록
     var info = true;
     res.render('main.html',{info});
 });
