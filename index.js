@@ -23,7 +23,7 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 
 app.get('/', function (req, res) {
-    res.redirect('/menu')
+    res.render('main.html');
 });
 app.get('/menu', function (req, res) {// 메뉴 추천 
     var menu = true;
