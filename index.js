@@ -34,6 +34,10 @@ app.get('/info', function (req, res) { // 팀원 목록
     res.render('main.html',{info});
 });
 
+app.post('/search', function(req,res) {
+    console.log(req.body);
+    res.json('sucess!');
+});
 app.listen(port);
 
 

@@ -1,7 +1,7 @@
 
 <p>menu recommend</p>
 <script type="text/javascript">
-  function add_ingredients(){
+  function add_ingredients(){//재료 리스트 입력
     var ingredient = $("#ingredients").val();
     if(ingredient == ""){
       alert('재료가 입력되지 않았습니다');
@@ -13,7 +13,7 @@
     }
   };
 
-  function remove_item(id){ 
+  function remove_item(id){ //재료 객체 삭제 
 
     console.log("delete "+$(id).parent().text());
     
@@ -21,8 +21,26 @@
     return false; 
   
   };
+  function search_menu(){
+    var words = $("#search_menu_form").serializeArray();
+     $.ajax({
+       type:'POST',
+       url: '/search',
+       data: words,
+       dataType: 'json',
+       success: function(result){
+         console.log(result);
+         $("#result").html(result);
+       },
+       error: function(e) {
+         console.error('error '+e.status);
+         $("#result").html("");
+        }
+     });
+  };
+
 </script>
-<form>
+<form id="search_menu_form" onsubmit="return false">
   <div class="form-group col-md-6">
     <label for="ingredients">재료</label>
     <input type="text" class="form-control" id="ingredients" placeholder="추가되는 재료들 (ex. 감자, 양파, 마늘)">
@@ -33,19 +51,19 @@
 <div class="form-group col-md-6">
   <label for="tools">조리도구</label>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="pot" >
   <label class="form-check-label" for="inlineCheckbox1">냄비</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="fan">
   <label class="form-check-label" for="inlineCheckbox2">후라이팬</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="microwave" >
   <label class="form-check-label" for="inlineCheckbox3">전자레인지</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4" >
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="mixer" >
   <label class="form-check-label" for="inlineCheckbox4">믹서기</label>
 </div>
 </div>
@@ -53,18 +71,21 @@
 <div class="form-group col-md-6">
   <label for="tools">난이도</label>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+  <input class="form-check-input" type="radio" name="difficulty" id="inlineRadio1" value="2">
   <label class="form-check-label" for="inlineRadio1">상</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+  <input class="form-check-input" type="radio" name="difficulty" id="inlineRadio2" value="1">
   <label class="form-check-label" for="inlineRadio2">중</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" >
+  <input class="form-check-input" type="radio" name="difficulty" id="inlineRadio3" value="0" >
   <label class="form-check-label" for="inlineRadio3">하</label>
 </div>
 </div>
-<button type="button" class="btn btn-primary" onclick="">이것만</button>
-<button type="button" class="btn btn-primary" onclick="">다른것도</button>
+<div class="form-group col-md-6">
+ <button type="button" class="btn btn-primary" onclick="search_menu()">이것만</button>
+ <button type="button" class="btn btn-primary" onclick="search_menu()">다른것도</button>
+</div>
 </form>
+<div id="result"></div>
