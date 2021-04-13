@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "jquery": "^3.6.0",
     "nunjucks": "^3.2.3",
-    "popper.js": "^1.16.1"
+    "popper.js": "^1.16.1",
+    "select2": "^4.1.0-rc.0"
   }
-
 }
