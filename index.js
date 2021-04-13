@@ -34,10 +34,31 @@ app.get('/info', function (req, res) { // 팀원 목록
     res.render('main.html',{info});
 });
 
-app.post('/search', function(req,res) {
+app.post('/ingredients', function(req,res) {//재료 목록 
+    
+    res.json({
+        "results":[
+            {
+                "id":"사과",
+                "text":"사과"
+            },
+            {
+                "id":"감자",
+                "text":"감자"
+            }
+        ],
+        "pagination":{
+            "more":false
+        }
+    });
+});
+
+app.post('/search', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
     res.json('sucess!');
 });
+
+
 app.listen(port);
 
 
