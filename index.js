@@ -33,24 +33,24 @@ app.get('/info', function (req, res) { // 팀원 목록
     var info = true;
     res.render('main.html',{info});
 });
+const ingredients_list = require('./ingredients.json');
 
 app.post('/ingredients', function(req,res) {//재료 목록 
-    
-    res.json({
+    //console.log(ingredients_list);
+    var results = {
         "results":[
             {
-                "id":"사과",
-                "text":"사과"
-            },
-            {
-                "id":"감자",
-                "text":"감자"
+                "id":"",
+                "text":""
             }
         ],
         "pagination":{
             "more":false
         }
-    });
+    };
+    ingredients_list.forEach(Element => results['results'].push({id: Element, text: Element}));
+    //console.log(results);
+    res.json(results);
 });
 
 app.post('/search', function(req,res) {//메뉴 검색 요청 응답 

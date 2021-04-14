@@ -49,10 +49,11 @@
   };
   function search_menu(){ //메뉴 추천 요청 ajax 함수 
     var words = $("#search_menu_form").serializeArray();
-    //console.log(words);
-    if(!words.length || words[0].name != 'ingredients'){
+    console.log(words);
+    var ingredient = $("#ingredients").val();
+    //console.log(ingredient);
+    if(!ingredient.length){
       alert('재료가 입력되지 않았습니다');
-      //console.log(words[0].name);
       return false;
     }
      $.ajax({
