@@ -33,6 +33,7 @@ app.get('/info', function (req, res) { // 팀원 목록
     var info = true;
     res.render('main.html',{info});
 });
+
 const ingredients_list = require('./ingredients.json');
 
 app.post('/ingredients', function(req,res) {//재료 목록 

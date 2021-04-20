@@ -5,7 +5,7 @@
 <script type="text/javascript">
  $("#document").ready(function () {
    $("#ingredients").select2({
-     ajax: {
+     /*ajax: {
        type: 'POST',
        url: '/ingredients',
        dataType: 'json',
@@ -21,9 +21,25 @@
            results: data.results
          };
        }
-     },
+     },*/
      placeholder:'추가되는 재료들 (ex. 감자, 양파, 마늘)'
     });
+    $.ajax({
+       type:'POST',
+       url: '/ingredients',
+       dataType: 'json',
+       success: function(result){
+         //console.log(result);
+         result['results'].forEach(element => {
+          $("#ingredients").append("<option>"+element['text']+"</option>");
+         });
+        
+       },
+       error: function(e) {
+         console.error('error '+e.status);
+          
+        }
+     });
   });
 
 
@@ -47,6 +63,7 @@
     return false; 
   
   };
+
   function search_menu(){ //메뉴 추천 요청 ajax 함수 
     var words = $("#search_menu_form").serializeArray();
     console.log(words);
@@ -68,6 +85,7 @@
        error: function(e) {
          console.error('error '+e.status);
          $("#result").html("");
+         alert("메뉴 목록 가져오기 실패");
         }
      });
   };
@@ -85,19 +103,19 @@
 <div class="form-group col-md-6">
   <label for="tools">조리도구</label>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="pot" >
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="tools" value="10">
   <label class="form-check-label" for="inlineCheckbox1">냄비</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="fan">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="tools" value="20">
   <label class="form-check-label" for="inlineCheckbox2">후라이팬</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="microwave" >
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="tools" value="30">
   <label class="form-check-label" for="inlineCheckbox3">전자레인지</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="mixer" >
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="tools" value="40">
   <label class="form-check-label" for="inlineCheckbox4">믹서기</label>
 </div>
 </div>
