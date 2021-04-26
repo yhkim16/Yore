@@ -35,6 +35,7 @@ app.get('/info', function (req, res) { // 팀원 목록
 });
 
 const ingredients_list = require('./ingredients.json');
+ 
 
 app.post('/ingredients', function(req,res) {//재료 목록 
     //console.log(ingredients_list);
@@ -57,6 +58,7 @@ app.post('/ingredients', function(req,res) {//재료 목록
 app.post('/search', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
     res.json('sucess!');
+ 
 });
 
 

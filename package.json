@@ -18,6 +18,7 @@
   "homepage": "https://github.com/yhkim16/Yore#readme",
   "dependencies": {
     "bootstrap": "^4.6.0",
+    "csv": "^5.5.0",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
     "nunjucks": "^3.2.3",
