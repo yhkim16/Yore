@@ -58,7 +58,8 @@ function readcsv(filePath) {
          
         //console.log(foods);
         //console.log(foods[0]);
-        //fs.writeFileSync('foods.json',foods);
+        foods = JSON.stringify(foods);
+        fs.writeFileSync('foods.json',foods);
     });
 
      

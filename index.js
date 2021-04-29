@@ -2,6 +2,10 @@ var express = require('express');
 var nunjucks = require('nunjucks');
 var app = express();
 
+const mysql = require('mysql');
+const dbconfig = require('./database.js');
+const connection = mysql.createConnection(dbconfig);
+
 var port = 3000;
 nunjucks.configure('.', {
     autoescape: true,
@@ -33,9 +37,14 @@ app.get('/info', function (req, res) { // 팀원 목록
     var info = true;
     res.render('main.html',{info});
 });
+app.get('/add_menu', function(req, res) {// 메뉴 추가
+    var add_menu = true;
+    res.render('main.html',{add_menu});
+
+});
 
 const ingredients_list = require('./ingredients.json');
- 
+const foods_list = require('./foods.json');
 
 app.post('/ingredients', function(req,res) {//재료 목록 
     //console.log(ingredients_list);
@@ -50,18 +59,40 @@ app.post('/ingredients', function(req,res) {//재료 목록
             "more":false
         }
     };
-    ingredients_list.forEach(Element => results['results'].push({id: Element, text: Element}));
+    ingredients_list.forEach(Element => results['results'].push({id: Element, text: Element}));//재료 목록에 하나씩 추가
     //console.log(results);
     res.json(results);
 });
 
 app.post('/search', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
-    res.json('sucess!');
+    
+    connection.query('SELECT * from menu ',(err,rows) => {
+        var foo;
+        if(err) console.log('select fail... ' + err);
+        foo = rows;
+         //console.log(foo);
+
+        res.json(foo);
+    });
+ 
+    //res.json(foods_list);
  
 });
 
+app.post('/add_menu', function(req,res){// 메뉴 추가 요청 처리 
+    console.log(req.body);
 
+    var sql = 'INSERT INTO menu (name, tools, difficulty, youtube, recipe, ingredients) VALUES (?,?,?,?,?,?)';
+    /* foods_list.forEach(Element => {
+        var data = JSON.stringify(Element.ingredients);
+        var params = [Element.name, Element.tools, Element.difficulty, Element.youtube, Element.recipe, data];
+        //console.log(params);
+        connection.query(sql,params,function(err){
+            if(err) console.log('query fail.... '+ err);
+        });
+    }); */
+    var add_menu = true;
+    res.render('main.html',{add_menu});
+});
 app.listen(port);
-
-

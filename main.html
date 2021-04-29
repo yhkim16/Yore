@@ -11,6 +11,8 @@
         {% include "views/contents/menu.html" %}
         {% elif info %}
         {% include "views/contents/info.html" %}
+        {% elif add_menu %}
+        {% include "views/contents/add_menu.html" %}
         {% else %}
         {% include "views/contents/menu.html" %}
         {% endif %}
