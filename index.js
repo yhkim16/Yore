@@ -44,7 +44,7 @@ app.get('/add_menu', function(req, res) {// 메뉴 추가
 });
 
 const ingredients_list = require('./ingredients.json');
-const foods_list = require('./foods.json');
+//const foods_list = require('./foods.json');
 
 app.post('/ingredients', function(req,res) {//재료 목록 
     //console.log(ingredients_list);
@@ -66,7 +66,7 @@ app.post('/ingredients', function(req,res) {//재료 목록
 
 app.post('/search', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
-    
+    console.log('다른것도');
     connection.query('SELECT * from menu ',(err,rows) => {
         var foo;
         if(err) console.log('select fail... ' + err);
@@ -79,7 +79,21 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
     //res.json(foods_list);
  
 });
+app.post('/search_only', function(req,res) {//메뉴 검색 요청 응답 
+    console.log(req.body);
+    console.log('이것만');
+    connection.query('SELECT * from menu ',(err,rows) => {
+        var foo;
+        if(err) console.log('select fail... ' + err);
+        foo = rows;
+         //console.log(foo);
 
+        res.json(foo);
+    });
+ 
+    //res.json(foods_list);
+ 
+});
 app.post('/add_menu', function(req,res){// 메뉴 추가 요청 처리 
     console.log(req.body);
 

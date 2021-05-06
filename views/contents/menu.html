@@ -64,18 +64,25 @@
   
   };
 
-  function search_menu(){ //메뉴 추천 요청 ajax 함수 
+  function search_menu(only){ //메뉴 추천 요청 ajax 함수 
     var words = $("#search_menu_form").serializeArray();
     console.log(words);
+    var send;
     var ingredient = $("#ingredients").val();
     //console.log(ingredient);
     if(!ingredient.length){
       alert('재료가 입력되지 않았습니다');
       return false;
     }
+    if(only){
+      send = '/search_only'
+    }
+    else{
+      send = '/search'
+    }
      $.ajax({
        type:'POST',
-       url: '/search',
+       url: send,
        data: words,
        dataType: 'json',
        success: function(result){
@@ -147,8 +154,8 @@
 </div>
 </div>
 <div class="form-group col-md-6">
- <button type="button" class="btn btn-primary" onclick="search_menu()">이것만</button>
- <button type="button" class="btn btn-primary" onclick="search_menu()">다른것도</button>
+ <button type="button" class="btn btn-primary" onclick="search_menu(true)">이것만</button>
+ <button type="button" class="btn btn-primary" onclick="search_menu(false)">다른것도</button>
 </div>
 </form>
 <div id="result">
