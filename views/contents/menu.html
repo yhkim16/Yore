@@ -74,6 +74,7 @@
       alert('재료가 입력되지 않았습니다');
       return false;
     }
+ 
     if(only){
       send = '/search_only'
     }
@@ -97,7 +98,13 @@
            //console.log(Element['ingredients']);
            var data = JSON.parse(Element['ingredients']);
            [].forEach.call(data, function(element) {
-            table += '<td>'+element['ingredient'];+'</td>';
+             var name = element['ingredient'];
+             if(ingredient.find(element => element===name)){
+              table += '<td>'+'<font color="red">'+name+'</font>'+'</td>';
+             }
+             else{
+              table += '<td>'+name+'</td>';
+             }
            });
            //table += '<td>'+Element['recipe'];+'</td>';
            table += '</tr>';
@@ -155,7 +162,7 @@
   <label class="form-check-label" for="inlineRadio2">중</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="difficulty" id="inlineRadio3" value="1">
+  <input class="form-check-input" type="radio" name="difficulty" id="inlineRadio3" value="1" checked="checked">
   <label class="form-check-label" for="inlineRadio3">하</label>
 </div>
 </div>

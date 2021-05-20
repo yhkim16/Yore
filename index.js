@@ -67,7 +67,11 @@ app.post('/ingredients', function(req,res) {//재료 목록
 app.post('/search', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
     console.log('다른것도');
-    connection.query('SELECT * from menu ',(err,rows) => {
+    
+    var sql = 'SELECT * from menu WHERE difficulty<=?'
+    var params = [Number(req.body['difficulty'])];
+
+    connection.query(sql, params,(err,rows) => {
         var foo;
         if(err) console.log('select fail... ' + err);
         foo = rows;
@@ -79,6 +83,7 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
     //res.json(foods_list);
  
 });
+
 app.post('/search_only', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
     console.log('이것만');
