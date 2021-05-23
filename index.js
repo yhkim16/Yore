@@ -44,7 +44,7 @@ app.get('/add_menu', function(req, res) {// 메뉴 추가
 });
 
 const ingredients_list = require('./ingredients.json');
-//const foods_list = require('./foods.json');
+const foods_list = require('./foods.json');
 
 app.post('/ingredients', function(req,res) {//재료 목록 
     //console.log(ingredients_list);
@@ -103,14 +103,14 @@ app.post('/add_menu', function(req,res){// 메뉴 추가 요청 처리
     console.log(req.body);
 
     var sql = 'INSERT INTO menu (name, tools, difficulty, youtube, recipe, ingredients) VALUES (?,?,?,?,?,?)';
-    /* foods_list.forEach(Element => {
+    foods_list.forEach(Element => {
         var data = JSON.stringify(Element.ingredients);
         var params = [Element.name, Element.tools, Element.difficulty, Element.youtube, Element.recipe, data];
         //console.log(params);
         connection.query(sql,params,function(err){
             if(err) console.log('query fail.... '+ err);
         });
-    }); */
+    }); 
     var add_menu = true;
     res.render('main.html',{add_menu});
 });
