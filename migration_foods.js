@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require("path");
 var fs = require("fs");
 var csv = require("csv");
@@ -27,7 +29,7 @@ function readcsv(filePath) {
                     "weight": { "type": "number" },
                 }*/]
             };
-            for(let i=0;Element[i]!="!EOL";i++){
+            for(let i=0;Element[i]!="!EOL" && Element[i] != null;i++){
                 switch(i){
                     case 0:
                         food.name = Element[i];
