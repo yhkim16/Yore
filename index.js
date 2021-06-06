@@ -64,6 +64,18 @@ app.post('/ingredients', function(req,res) {//재료 목록
     res.json(results);
 });
 
+app.post('/all', function(req,res) {//메뉴 검색 요청 응답 
+    console.log('전체');
+    connection.query('SELECT * from menu ',(err,rows) => {
+        var foo;
+        if(err) console.log('select fail... ' + err);
+        foo = rows;
+         //console.log(foo);
+
+        res.json(foo);
+    });   
+});
+
 app.post('/search', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
     console.log('다른것도');
@@ -71,6 +83,8 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
     var sql = 'SELECT * from menu WHERE difficulty<=?';
     var params = [Number(req.body['difficulty'])];
     var tools = 0;
+    var ingredients = req.body['ingredients'];
+
     if(Array.isArray(req.body['tools'])) {
     
         [].forEach.call(req.body['tools'], Element => {
@@ -81,27 +95,47 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
         tools = 0;
     }
     else {
-        tools = req.body['tools']
+        tools = req.body['tools'];
     }
     console.log(tools);
     connection.query(sql, params,(err,rows) => {
         var foo = [];
-        var d = 0;
+
         if(err) {
             console.log('select fail... ' + err);
             return;
         }
  
-         //console.log(foo);
-        /*rows.forEach(Element => {
-            //console.log(Element['tools']|tools);
-            if((Element['tools']|tools) == 255){
-                foo.push(Element);
-                d++;
-            }
-        });
-        console.log(d);*/
+         //console.log(rows);
+
         foo = rows.filter(Element => ((Element['tools']|tools) === 255)); 
+        foo = foo.filter(Element => {
+            var score = 0;
+            [].forEach.call(JSON.parse(Element['ingredients']), element =>{
+                //console.log(element);
+                if(ingredients instanceof Array){                
+                    [].forEach.call(ingredients, Element =>{                               
+                        //console.log(Element);                
+                        if(Element == element['ingredient']){                
+                            score += element['weight'];                
+                        }               
+                    })            
+                }
+                else {
+                    //console.log(ingredients);                
+                    if(ingredients == element['ingredient']){   
+                        score += element['weight'];                
+                    } 
+                }
+            });
+            if(score >= 50){
+                return true;
+            }
+            else{
+                return false;
+            }
+            
+        })
         //console.log(foo);
         res.json(foo);
     });
@@ -113,12 +147,58 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
 app.post('/search_only', function(req,res) {//메뉴 검색 요청 응답 
     console.log(req.body);
     console.log('이것만');
-    connection.query('SELECT * from menu ',(err,rows) => {
-        var foo;
-        if(err) console.log('select fail... ' + err);
-        foo = rows;
-         //console.log(foo);
+    
+    var sql = 'SELECT * from menu WHERE difficulty<=?';
+    var params = [Number(req.body['difficulty'])];
+    var tools = 0;
+    var ingredients = req.body['ingredients'];
 
+    if(Array.isArray(req.body['tools'])) {
+    
+        [].forEach.call(req.body['tools'], Element => {
+            tools += Number(Element);
+        });
+    }
+    else if(req.body['tools'] == undefined){
+        tools = 0;
+    }
+    else {
+        tools = req.body['tools'];
+    }
+    console.log(tools);
+    connection.query(sql, params,(err,rows) => {
+        var foo = [];
+
+        if(err) {
+            console.log('select fail... ' + err);
+            return;
+        }
+ 
+         //console.log(rows);
+
+        foo = rows.filter(Element => ((Element['tools']|tools) === 255)); 
+        foo = foo.filter(Element => {
+            var result = false;
+            [].forEach.call(JSON.parse(Element['ingredients']), element =>{
+                //console.log(element);
+                if(ingredients instanceof Array){                
+                    [].forEach.call(ingredients, Element =>{                               
+                        //console.log(Element);                
+                        if(Element == element['ingredient']){                
+                            result = true;
+                        }               
+                    })            
+                }
+                else {
+                    //console.log(ingredients);                
+                    if((ingredients == element['ingredient']) && element['ingredient'].length == 1){   
+                        result = true;
+                    } 
+                }
+                return result;
+            });
+        })
+        //console.log(foo);
         res.json(foo);
     });
  
