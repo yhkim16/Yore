@@ -92,7 +92,7 @@
          $("#resultTableBody").empty();
          var i = 1;
          result.forEach(Element => {//table 변수에 결과 입력
-           table += '<tr onClick="">';
+           table += '<tr data-toggle="modal" data-target="#menu_modal" onClick="">';
            table += '<td>'+i+'</td>';
            table += '<td>'+Element['name'];+'</td>';
            //console.log(Element['ingredients']);
@@ -122,7 +122,7 @@
   };
 
 </script>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#menu_modal">모달 테스트</button>
+  <!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#menu_modal">모달 테스트</button> -->
 
 <form id="search_menu_form" onsubmit="return false">
   <div class="form-group col-md-6">
@@ -133,23 +133,39 @@
     <ol id="ol_list"> </ol>
   </div>
 
-<div class="form-group col-md-6">
+<div class="form-group col-md-8">
   <label for="tools">조리도구</label>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="tools" value="10">
-  <label class="form-check-label" for="inlineCheckbox1">냄비</label>
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="tools" value="128">
+  <label class="form-check-label" for="inlineCheckbox1">프라이팬</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="tools" value="20">
-  <label class="form-check-label" for="inlineCheckbox2">후라이팬</label>
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="tools" value="64">
+  <label class="form-check-label" for="inlineCheckbox2">냄비</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="tools" value="30">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="tools" value="32">
   <label class="form-check-label" for="inlineCheckbox3">전자레인지</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="tools" value="40">
-  <label class="form-check-label" for="inlineCheckbox4">믹서기</label>
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="tools" value="16">
+  <label class="form-check-label" for="inlineCheckbox4">오븐</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox5" name="tools" value="8">
+  <label class="form-check-label" for="inlineCheckbox5">에어프라이어</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox6" name="tools" value="4">
+  <label class="form-check-label" for="inlineCheckbox6">찜기</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox7" name="tools" value="2">
+  <label class="form-check-label" for="inlineCheckbox7">믹서기</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox8" name="tools" value="1">
+  <label class="form-check-label" for="inlineCheckbox8">뚝배기</label>
 </div>
 </div>
 
@@ -198,6 +214,7 @@
       </div>
       <div class="modal-body">
         <iframe  src="https://www.youtube.com/embed/Fm2vSUg1LXE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <p>메뉴 설명</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>

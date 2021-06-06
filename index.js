@@ -68,18 +68,41 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
     console.log(req.body);
     console.log('다른것도');
     
-    var sql = 'SELECT * from menu WHERE difficulty<=?'
+    var sql = 'SELECT * from menu WHERE difficulty<=?';
     var params = [Number(req.body['difficulty'])];
-
+    var tools = 0;
+    if(Array.isArray(req.body['tools'])) {
+    
+        [].forEach.call(req.body['tools'], Element => {
+            tools += Number(Element);
+        });
+    }
+    else if(req.body['tools'] == undefined){
+        tools = 0;
+    }
+    else {
+        tools = req.body['tools']
+    }
+    console.log(tools);
     connection.query(sql, params,(err,rows) => {
-        var foo;
+        var foo = [];
+        var d = 0;
         if(err) {
             console.log('select fail... ' + err);
             return;
         }
-        foo = rows;
+ 
          //console.log(foo);
-
+        /*rows.forEach(Element => {
+            //console.log(Element['tools']|tools);
+            if((Element['tools']|tools) == 255){
+                foo.push(Element);
+                d++;
+            }
+        });
+        console.log(d);*/
+        foo = rows.filter(Element => ((Element['tools']|tools) === 255)); 
+        //console.log(foo);
         res.json(foo);
     });
  
