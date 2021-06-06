@@ -73,7 +73,10 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
 
     connection.query(sql, params,(err,rows) => {
         var foo;
-        if(err) console.log('select fail... ' + err);
+        if(err) {
+            console.log('select fail... ' + err);
+            return;
+        }
         foo = rows;
          //console.log(foo);
 
