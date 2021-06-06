@@ -128,7 +128,7 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
                     } 
                 }
             });
-            if(score >= 50){
+            if(score >= 80){
                 return true;
             }
             else{
@@ -183,20 +183,25 @@ app.post('/search_only', function(req,res) {//메뉴 검색 요청 응답
                 //console.log(element);
                 if(ingredients instanceof Array){                
                     [].forEach.call(ingredients, Element =>{                               
-                        //console.log(Element);                
+                        //console.log(Element);      
+                        //console.log(Element == element['ingredient']);
                         if(Element == element['ingredient']){                
                             result = true;
-                        }               
+                            return;
+                            
+                        }
+                        else if((Element != element['ingredient']) && element['weight'] != 0) {
+                            result = false;
+                        }
                     })            
                 }
-                else {
-                    //console.log(ingredients);                
-                    if((ingredients == element['ingredient']) && element['ingredient'].length == 1){   
-                        result = true;
-                    } 
+                else if((ingredients == element['ingredient']) && element['ingredient'].length == 1){  
+                    //console.log(ingredients);
+                    result = true;    
+                    return;    
                 }
-                return result;
             });
+            return result;
         })
         //console.log(foo);
         res.json(foo);
