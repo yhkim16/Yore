@@ -92,7 +92,7 @@
          $("#resultTableBody").empty();
          var i = 1;
          result.forEach(Element => {//table 변수에 결과 입력
-           table += '<tr onClick="menu_modal_show()">';//\"'+Element['name']+'\",\"'+Element['youtube']+'\",\"'+Element['recipe']+'\")">';
+           table += '<tr onClick="menu_modal_show(\`'+Element['name']+'\`,\`'+Element['youtube']+'\`,\`'+Element['recipe']+'\`)">';
            table += '<td>'+i+'</td>';
            table += '<td>'+Element['name'];+'</td>';
            //console.log(Element['ingredients']);
@@ -154,11 +154,21 @@ function all_menu(){
         }
      });
 };
-function menu_modal_show(name,you,re){
- /* $("#menu_title").val(name);
+function menu_modal_show(name,you,re){//모달 내용 입력 후 show
+  console.log(name);
+  console.log(you);
+  console.log(name);
+
+  if(name == undefined){
+    $("#menu_title").empty();
+  }
+  if(re == undefined){
+    $("#menu_recipe").empty();
+  }
+  $("#menu_title").html(name);
   $("#menu_youtube").empty();
   $("#menu_youtube").attr('src','https://www.youtube.com/embed/'+you);
-  $("#menu_recipe").val(re);*/
+  $("#menu_recipe").html(re);
 
   $("#menu_modal").modal('show');
 }
