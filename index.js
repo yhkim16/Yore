@@ -80,25 +80,25 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
     console.log(req.body);
     console.log('다른것도');
     
-    var sql = 'SELECT * from menu WHERE difficulty<=?';
-    var params = [Number(req.body['difficulty'])];
-    var tools = 0;
-    var ingredients = req.body['ingredients'];
+    var sql = 'SELECT * from menu WHERE difficulty<=?';//난이도에 따른 쿼리
+    var params = [Number(req.body['difficulty'])];//난이도
+    var tools = 0;//조리도구 초기값
+    var ingredients = req.body['ingredients'];//입력된 재료
 
-    if(Array.isArray(req.body['tools'])) {
+    if(Array.isArray(req.body['tools'])) {//조리도구 여러개 받았을때
     
         [].forEach.call(req.body['tools'], Element => {
             tools += Number(Element);
         });
     }
-    else if(req.body['tools'] == undefined){
+    else if(req.body['tools'] == undefined){//조리도구가 입력되지 않았을 때
         tools = 0;
     }
-    else {
+    else {//조리도구가 하나만 입력 되었을때
         tools = req.body['tools'];
     }
     console.log(tools);
-    connection.query(sql, params,(err,rows) => {
+    connection.query(sql, params,(err,rows) => {//SELECT 실행 콜백
         var foo = [];
 
         if(err) {
@@ -108,8 +108,8 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
  
          //console.log(rows);
 
-        foo = rows.filter(Element => ((Element['tools']|tools) === 255)); 
-        foo = foo.filter(Element => {
+        foo = rows.filter(Element => ((Element['tools']|tools) === 255)); //조리도구 조건 필터링
+        foo = foo.filter(Element => {//재료조건 필터링
             var score = 0;
             [].forEach.call(JSON.parse(Element['ingredients']), element =>{
                 //console.log(element);
@@ -128,7 +128,7 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
                     } 
                 }
             });
-            if(score >= 80){
+            if(score >= 80){//재료들 점수가 80점 이상이면 출력 
                 return true;
             }
             else{
