@@ -84,6 +84,10 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
     var params = [Number(req.body['difficulty'])];//난이도
     var tools = 0;//조리도구 초기값
     var ingredients = req.body['ingredients'];//입력된 재료
+    var BaseIngredients = ['소금','후추','식용유','간장'];//기본 재료 목록
+    if(ingredients instanceof Array) {
+        ingredients.push(...BaseIngredients);//입력된 재료에 기본 재료 목록 추가
+    } 
 
     if(Array.isArray(req.body['tools'])) {//조리도구 여러개 받았을때
     
@@ -152,6 +156,10 @@ app.post('/search_only', function(req,res) {//메뉴 검색 요청 응답
     var params = [Number(req.body['difficulty'])];
     var tools = 0;
     var ingredients = req.body['ingredients'];
+    var BaseIngredients = ['소금','후추','식용유','간장'];
+    if(ingredients instanceof Array) {
+        ingredients.push(...BaseIngredients);
+    } 
 
     if(Array.isArray(req.body['tools'])) {
     
@@ -178,29 +186,33 @@ app.post('/search_only', function(req,res) {//메뉴 검색 요청 응답
 
         foo = rows.filter(Element => ((Element['tools']|tools) === 255)); 
         foo = foo.filter(Element => {
-            var result = false;
-            [].forEach.call(JSON.parse(Element['ingredients']), element =>{
+            var result = false;//조건이 일치하면 true 
+            var arr1 = JSON.parse(Element['ingredients']);
+
+            for(let i = 0; i < Object.keys(arr1).length; i++) {//DB의 재료들을 불러와서
                 //console.log(element);
-                if(ingredients instanceof Array){                
-                    [].forEach.call(ingredients, Element =>{                               
-                        //console.log(Element);      
-                        //console.log(Element == element['ingredient']);
-                        if(Element == element['ingredient']){                
-                            result = true;
-                            return;
-                            
+                if(ingredients instanceof Array){   
+                    a = ingredients.find(element => {//입력된 재료들 중 존재하는지 찾는다.
+                        if(element == arr1[i]['ingredient']) {
+                            //console.log(Element['name']);
+                            return true;
                         }
-                        else if((Element != element['ingredient']) && element['weight'] != 0) {
-                            result = false;
-                        }
-                    })            
+                    });
+
+                    if(a != undefined){//존재하면 true
+                        result = true;
+                    }
+                    else{
+                        result = false;
+                        //console.log(Element['name']);
+                        break;
+                    }
                 }
-                else if((ingredients == element['ingredient']) && element['ingredient'].length == 1){  
-                    //console.log(ingredients);
-                    result = true;    
-                    return;    
+                else{//입력받은 재료가 1개 이하일 때 
+                    result = false;
+                    return;
                 }
-            });
+            }
             return result;
         })
         //console.log(foo);
