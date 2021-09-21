@@ -83,7 +83,7 @@ app.post('/search', function(req,res) {//메뉴 검색 요청 응답
     var sql = 'SELECT * from menu WHERE difficulty<=?';//난이도에 따른 쿼리
     var params = [Number(req.body['difficulty'])];//난이도
     var tools = 0;//조리도구 초기값
-    var ingredients = req.body['ingredients'];//입력된 재료
+    var ingredients = req.body['ingredients'];//입력된 재료 , TEST CASE : 'MSG', '달걀', '대파', '도라지', '돼지고기', '라면', '밀가루', '밥', '소고기', '양파', '카레가루'
     var BaseIngredients = ['소금','후추','식용유','간장','설탕','물','고춧가루'];//기본 재료 목록
     if(ingredients instanceof Array) {
         ingredients.push(...BaseIngredients);//입력된 재료에 기본 재료 목록 추가
