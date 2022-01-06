@@ -132,7 +132,7 @@ function all_menu(){
          $("#resultTableBody").empty();
          var i = 1;
          result.forEach(Element => {//table 변수에 결과 입력
-           table += '<tr onClick="menu_modal_show()">';
+           table += '<tr onClick="menu_modal_show(\`'+Element['name']+'\`,\`'+Element['youtube']+'\`,\`'+Element['recipe']+'\`)">';
            table += '<td>'+i+'</td>';
            table += '<td>'+Element['name'];+'</td>';
            //console.log(Element['ingredients']);
