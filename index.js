@@ -5,6 +5,22 @@ var app = express();
 const mysql = require('mysql');
 const dbconfig = require('./database.js');
 const connection = mysql.createConnection(dbconfig);
+function handleDisconnect(conn) {//reconnect handler
+    conn.on('error', function(err) {
+        if (!err.fatal) {
+            return;
+        }
+
+        if (err.code !== 'PROTOCOL_CONNECTION_LOST') {//DB 연결이 끊겼을때 
+            throw err;
+        }
+        console.log('Re-connecting lost connection: ' + err.stack);
+        connection = mysql.createConnection(dbconfig);
+        handleDisconnect(connection);
+        connection.connect();
+    });
+}
+handleDisconnect(connection);
 
 var port = 3000;
 nunjucks.configure('.', {
